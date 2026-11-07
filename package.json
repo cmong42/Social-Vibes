@@ -1,0 +1,15 @@
+{
+  "name": "social-vibes-monorepo",
+  "private": true,
+  "workspaces": [
+    "ui",
+    "backend"
+  ],
+  "scripts": {
+    "start:ui": "npm workspace ui run start",
+    "start:backend": "npm workspace backend start",
+    "build:ui": "npm workspace ui run build",
+    "test:ui": "npm workspace ui run test",
+    "dev:backend": "npm workspace backend run start"
+  }
+}
