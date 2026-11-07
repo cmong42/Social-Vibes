@@ -5,10 +5,20 @@ import http from 'node:http';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const OLLAMA_BASE_URL = 'http://100.65.66.22:11434';
+const OLLAMA_BASE_URL = 'http://100.112.113.39:11434';
 const OLLAMA_URL = `${OLLAMA_BASE_URL}/api/chat`;
 const OLLAMA_MODEL = process.env.OLLAMA_MODEL || 'gpt-oss-long';
 const FORWARDED_CLIENT_IP = '100.112.113.39';
+
+app.use('/chat', (req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(204);
+  }
+  next();
+});
 
 const stripHopByHopHeaders = (headers) => {
   const forwardedHeaders = { ...headers };
@@ -34,7 +44,7 @@ const stripHopByHopHeaders = (headers) => {
 
 app.use((req, res, next) => {
   const clientIp = req.socket.remoteAddress?.replace(/^::ffff:/i, '');
-  if (clientIp !== FORWARDED_CLIENT_IP) {
+  if (clientIp !== FORWARDED_CLIENT_IP || req.path === '/chat') {
     return next();
   }
 
