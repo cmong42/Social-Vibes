@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const OLLAMA_BASE_URL = 'http://100.112.113.39:11434';
 const OLLAMA_URL = `${OLLAMA_BASE_URL}/api/chat`;
-const OLLAMA_MODEL = process.env.OLLAMA_MODEL || 'gpt-oss-long';
+const OLLAMA_MODEL = process.env.OLLAMA_MODEL || 'gpt-oss:20b';
 const FORWARDED_CLIENT_IP = '100.112.113.39';
 
 app.use('/chat', (req, res, next) => {
